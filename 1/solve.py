@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import sys
-B = 1030000
+B = 1000000
 p = pd.read_csv("task-1-stocks.csv")
 N = len(p.columns)
 T = len(p)
