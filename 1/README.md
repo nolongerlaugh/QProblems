@@ -1,21 +1,21 @@
-# Формирование инвестиционного портфеля
+# Formation of an investment portfolio
 
-## Описание решения
+## Description of the solution
 
-Это решение реализует модель квадратичной неограниченной бинарной оптимизации (QUBO) для оптимизации портфеля. Код вычисляет ожидаемую доходность, ковариацию доходностей активов и затем использует QUBO-формулировку для оптимизации распределения капитала между активами на основе заданных критериев риска и доходности. Цель — оптимально распределить капитал среди активов, используя методы QUBO
+This solution implements the Quadratic Unlimited Binary Optimization (QUBO) model for portfolio optimization. The code calculates the expected return, the covariance of asset returns, and then uses the QUBO formulation to optimize the allocation of capital between assets based on specified risk and return criteria. The goal is to optimally distribute capital among assets using QUBO methods
 
-Подробее о преобразовании цели в функцию потерь смотреть в презентации
+For more information about converting a goal into a loss function, see the presentation
 
 
-Выходом программы является вектор целочисленных переменных, который описывает количество купленных акций. 
+The output of the program is a vector of integer variables that describes the number of shares purchased.
 
-## Файлы
+## Files
 
-- `task-1-stocks.csv`: CSV-файл с историческими ценами акций для каждого актива. 
+- `task-1-stocks.csv': A CSV file with historical stock prices for each asset.
+  
+## Quick start
 
-## Быстрый старт
-
-### Шаг 1: Загрузка и обработка данных
+### Step 1: Uploading and processing data
 
 ```python
 import pandas as pd
@@ -41,7 +41,7 @@ r_s = r(p_s)
 mu_s = mu(r_s)
 sigma_s = sigma(r_s)
 ```
-### Шаг 2: Генерация матрицы преобразования и параметров
+### Step 2: Generating the transformation matrix and parameters
 
 ```python
 n_max = np.floor(B / p.iloc[0, :])  # Максимальное количество единиц каждого актива
@@ -60,7 +60,7 @@ def c(d):
 C = c(d)
 ```
 
-### Шаг 3: Вычисление QUBO-матрицы
+### Step 3: Calculating the QUBO Matrix
 
 ```python
 def calculate_qubo_matrix(mu_ss, P_ss, sigma_ss, q, lambd, K=30, floor=True):
@@ -108,7 +108,8 @@ P_ss = C.T @ np.floor(p_s.iloc[0, :] * (1 << K))
 Q = calculate_qubo_matrix(mu_ss, P_ss, sigma_ss, q, lambd, K, floor)
 ```
 
-### Шаг 4: Запуск оптимизации и оценка результата
+### Step 4: Start optimization and evaluate the result
+```python
 print('Запуск оптимизации')
 a = -np.triu(Q + Q.T - np.diag(np.diag(Q)))
 sol = pq.solve(a, number_of_runs=2, number_of_steps=1000, return_samples=False, verbose=10, gpu=True, seed=239)
@@ -119,8 +120,9 @@ print('Потратили: ', x @ p.iloc[0, :])
 print('Общий доход: ', float(x @ p.iloc[-1, :] - x @ p.iloc[0, :]))
 print('Средний доход: ', float(R(x, p).iloc[0]))
 print('Риск: ', float(Sigma(x, p).iloc[0]))
+```
 
-### Функции для расчета метрик портфеля
+### Functions for calculating portfolio metrics
 
 ```python
 def R(x, p):
