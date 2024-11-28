@@ -1,15 +1,15 @@
-### Описание проекта
-Этот проект реализует оптимизацию маршрутов для автобусов в транспортной сети с использованием метода квадратичной неограниченной бинарной оптимизации (QUBO). Код генерирует QUBO-матрицу на основе заданных ограничений и целевой функции, а затем решает задачу оптимизации, используя библиотеку pyqiopt.
+### Description of the project
+This project implements the optimization of routes for buses in the transport network using the quadratic unlimited binary optimization (QUBO) method. The code generates a QUBO matrix based on the specified constraints and the objective function, and then solves the optimization problem using the pyqiopt library.
 
 
-### Файлы
-`task-2-adjacency_matrix.csv`: CSV-файл, содержащий матрицу смежности для транспортной сети.
+### Files
+`task-2-adjacency_matrix.csv`: A CSV file containing the adjacency matrix for the transport network.
 
-`task-2-nodes.csv`: CSV-файл, содержащий список узлов (остановок) и количество людей в каждом узле.
+`task-2-nodes.csv`: A CSV file containing a list of nodes (stops) and the number of people at each node.
 
-## Быстрый старт
+## Quick start
 
-### Шаг 1: Загрузка и обработка данных
+### Step 1: Uploading and processing data
 
 ```python
 import pandas as pd
@@ -45,7 +45,7 @@ for i in range(N_LOCS):
         else:
             no_edges.extend([(i, j), (j, i)])
 ```
-### Шаг 2: Определение параметров задачи
+### Step 2: Defining the task parameters
 
 ```python
 N_ANCILLA_PER_BUS = 4
@@ -66,7 +66,7 @@ ANCILLA_RANGE = range(N_ANCILLA_PER_BUS)
 
 ```
 
-### Шаг 3: Построение QUBO-матрицы
+### Step 3: Building a QUBO matrix
 ```python
 from itertools import product
 
@@ -117,7 +117,7 @@ for location_index, time_index in product(CROSSROADS_RANGE, TIME_RANGE):
             QQ[4, qubo_index_1, qubo_index_2] += 2
 
 ```
-### Шаг 4: Запуск оптимизации и сохранение результатов
+### Step 4: Start optimization and save the results
 
 ```python
 weights = [0, 0, 1, 1, 0, 0, 0]
