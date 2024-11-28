@@ -1,10 +1,10 @@
-1) Сначала с помощью ноутбука embedder-for-qml.ipynb производим предобработку. Используя библиотеку SentenceTransformers, мы строим информативные векторные (размер 384) представления для наших комментариев. Также в этом же ноутбуке для последующего квантового алгоритма мы обучаем классический автоэнкодер на сжатие вектора размера 384 в NUM_QUBITS (=4 в этой задача)
+1) First, using the embedder-for-qml.ipynb laptop, we perform preprocessing. Using the SentenceTransformers library, we build informative vector (size 384) representations for our comments. Also in the same laptop, for the subsequent quantum algorithm, we train a classical autoencoder to compress a vector of size 384 into NUM_QUBITS (=4 in this task)
 
 
-2) Далее в ноутбуке classical.ipynb задача решается классическим образом на основе полученных эмбеддингов предложений. Мы построили простейшую сеть с одним линейным слоем и оучили ее на задачу классификации
+2) Next, in the classical.ipynb notebook, the problem is solved in a classical way based on the received embeddings of proposals. We have built a simple network with a single linear layer and trained it for the classification task
 
 
-3) Скрипт pyideem-qml-train-test.py использовался нами для обучения квантового вариационного алгоритма (ZZFeatureMap + RealAmplitudeAnsatz) на задачу бинарной классификации на бэкенде pyideem. Результатами его выполнения являются зависимости функции потерь от числа итераций для трейновой и тестовой выборок (разделенных собственноручно), а также набор оптимальных параметров
+3) The script pyideem-qml-train-test.py We used it to train a quantum variational algorithm (ZZFeatureMap + RealAmplitudeAnsatz) for the binary classification problem on the pyideem backend. The results of its execution are the dependences of the loss function on the number of iterations for the train and test samples (separated by hand), as well as a set of optimal parameters
 
 
-4) Последний ноутбук qml.ipynb инициализирует квантовую цепочку с оптимальными параметрами, найденными ранее, отрисовывает функции потерь от числа итераций и считает метрику accuracy
+4) The latest qml.ipynb notebook initializes the quantum chain with the optimal parameters found earlier, draws the loss functions from the number of iterations and calculates the accuracy metric
